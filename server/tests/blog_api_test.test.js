@@ -5,7 +5,7 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const supertest = require('supertest')
 const helper = require('./test_helper')
-const app = require('../app')
+const app = require('../../app')
 //const { before } = require('lodash')
 const api = supertest(app)
 

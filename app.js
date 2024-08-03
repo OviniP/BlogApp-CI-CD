@@ -23,7 +23,7 @@ app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
 if(process.env.NODE_ENV === 'test'){
-    const testingRouter = require('./controllers/testing')
+    const testingRouter = require('./server/controllers/testing')
     app.use('/api/testing',testingRouter)
 }  
 app.use(express.static('dist'))
