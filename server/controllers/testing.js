@@ -1,6 +1,6 @@
 const testingRouter = require('express').Router()
-const Blog = require('../server/models/blog')
-const User = require('../server/models/user')
+const Blog = require('../models/blog')
+const User = require('../models/user')
 
 testingRouter.post('/reset',async(request, response) => {
     await User.deleteMany({})

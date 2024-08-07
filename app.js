@@ -5,7 +5,7 @@ const app = express()
 const cors = require('cors')
 const middleware = require('./server/utils/middleware')
 require('express-async-errors')
-const blogsRouter = require('./server/controllers/Blogs')
+const blogsRouter = require('./server/controllers/blogs')
 const usersRouter = require('./server/controllers/users')
 const loginRouter = require('./server/controllers/login')
 const mongoose = require('mongoose')
@@ -23,7 +23,7 @@ app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
 if(process.env.NODE_ENV === 'test'){
-    const testingRouter = require('./controllers/testing')
+    const testingRouter = require('./server/controllers/testing')
     app.use('/api/testing',testingRouter)
 }  
 app.use(express.static('dist'))
