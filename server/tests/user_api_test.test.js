@@ -1,4 +1,4 @@
-const { test,beforeEach,after } = require('node:test')
+const { test,beforeEach,after, describe } = require('node:test')
 const assert = require('node:assert')
 const User = require('../models/user')
 const mongoose = require('mongoose')
@@ -15,45 +15,45 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
-//describe('POST',() => {
-test('When user is correct, then it should be saved', async() => {
-  const userToCreate = {
-    userName: 'ovinitest',
-    password : 'ovini123',
-    name: 'Ovini test'
-  }
-  const initialUsersInDB =  await testHelper.usersInDb()
-  await api.post('/api/users')
-    .send(userToCreate)
-    .expect(201)
-  const finalUsersInDB =  await testHelper.usersInDb()
-  assert.strictEqual(finalUsersInDB.length , initialUsersInDB.length + 1)
+describe('POST users',() => {
+  test('When user is correct, then it should be saved', async() => {
+    const userToCreate = {
+      userName: 'ovinitest',
+      password : 'ovini123',
+      name: 'Ovini test'
+    }
+    const initialUsersInDB =  await testHelper.usersInDb()
+    await api.post('/api/users')
+      .send(userToCreate)
+      .expect(201)
+    const finalUsersInDB =  await testHelper.usersInDb()
+    assert.strictEqual(finalUsersInDB.length , initialUsersInDB.length + 1)
+  })
+
+  test('When userName is not given, then correct error should be shown', async() => {
+    const userToCreate = {
+      password : 'ovini123',
+      name: 'Ovini P'
+    }
+
+    const response = await api.post('/api/users')
+      .send(userToCreate)
+      .expect(400)
+    assert(response.body.error.includes('userName should be more than 3 characters'))
+  })
+
+  test('When password is not given, then correct error should be shown', async() => {
+    const userToCreate = {
+      userName:'Ovini',
+      name: 'Ovini P'
+    }
+
+    const response = await api.post('/api/users')
+      .send(userToCreate)
+      .expect(400)
+    assert(response.body.error.includes('password should be more than 3 characters'))
+  })
 })
-
-test('When userName is not given, then correct error should be shown', async() => {
-  const userToCreate = {
-    password : 'ovini123',
-    name: 'Ovini P'
-  }
-
-  const response = await api.post('/api/users')
-    .send(userToCreate)
-    .expect(400)
-  assert(response.body.error.includes('userName should be more than 3 characters'))
-})
-
-test('When password is not given, then correct error should be shown', async() => {
-  const userToCreate = {
-    userName:'Ovini',
-    name: 'Ovini P'
-  }
-
-  const response = await api.post('/api/users')
-    .send(userToCreate)
-    .expect(400)
-  assert(response.body.error.includes('password should be more than 3 characters'))
-})
-
 test('When userName is not 3 characters, then correct error should be shown', async() => {
   const userToCreate = {
     userName: 'ov',
