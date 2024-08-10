@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
-import Notification from './components/notification'
+import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -38,7 +38,6 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('login in with ', userName, password)
     const credentials = {
       userName : userName,
       password : password
@@ -89,7 +88,6 @@ const App = () => {
   }
 
   const deletePost = async(id) => {
-    const response = await blogService.deleteBlog(id)
     const updatedBlogs = blogs.filter(item => item.id !== id)
     const sortedBlogs = updatedBlogs.sort((a,b) => b.likes - a.likes)
     setBlogs(sortedBlogs)
@@ -130,12 +128,11 @@ const App = () => {
         <BlogForm createPost = {createPost}></BlogForm>
       </Togglable>
       <div data-testid='blog-container'>
-        {   
-            blogs.map(blog =>
+        {
+          blogs.map(blog =>
             <Blog key={blog.id} blog={blog} updateBlog={updatePost} deleteBlog={deletePost} />
-        )}
+          )}
       </div>
-      
     </div>
   )
 }
