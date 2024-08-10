@@ -18,9 +18,9 @@ beforeEach(async () => {
 //describe('POST',() => {
 test('When user is correct, then it should be saved', async() => {
   const userToCreate = {
-    userName: 'ovini',
+    userName: 'ovinitest',
     password : 'ovini123',
-    name: 'Ovini P'
+    name: 'Ovini test'
   }
   const initialUsersInDB =  await testHelper.usersInDb()
   await api.post('/api/users')
