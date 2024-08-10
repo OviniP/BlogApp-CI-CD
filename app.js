@@ -11,11 +11,10 @@ const loginRouter = require('./server/controllers/login')
 const mongoose = require('mongoose')
 
 const mongoUrl = config.MONGODB_URI
-console.log(mongoUrl)
 mongoose.connect(mongoUrl)
-.then(() => {
+  .then(() => {
     logger.info('connected to the database.')
-})
+  })
 
 app.use(cors())
 app.use(express.json())
@@ -23,9 +22,9 @@ app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
 if(process.env.NODE_ENV === 'test'){
-    const testingRouter = require('./server/controllers/testing')
-    app.use('/api/testing',testingRouter)
-}  
+  const testingRouter = require('./server/controllers/testing')
+  app.use('/api/testing',testingRouter)
+}
 app.use(express.static('dist'))
 app.use('/api/blogs',blogsRouter)
 app.use('/api/users', usersRouter)
