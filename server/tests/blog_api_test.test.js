@@ -26,8 +26,9 @@ beforeEach(async () => {
 
   await api.post('/api/users')
     .send(userToCreate)
-  await api.post('/api/login')
+  const loginResponse = await api.post('/api/login')
     .send(userToCreate)
+  token = loginResponse.body.token
 })
 
 describe('HTTP GET', () => {
