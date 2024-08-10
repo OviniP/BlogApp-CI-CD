@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
-import Notification from './components/notification'
+import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
