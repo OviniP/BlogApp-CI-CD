@@ -28,7 +28,7 @@ describe('user tests',() => {
       .expect(201)
     //const finalUsersInDB =  await testHelper.usersInDb()
     //assert.strictEqual(finalUsersInDB.length , initialUsersInDB.length + 1)
-})
+  })
 
   test('When userName is not given, then correct error should be shown', async() => {
     const userToCreate = {
