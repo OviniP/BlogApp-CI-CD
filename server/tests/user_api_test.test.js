@@ -15,7 +15,7 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
-describe('POST users',() => {
+describe('user tests',() => {
   test('When user is correct, then it should be saved', async() => {
     const userToCreate = {
       userName: 'ovinitest',
@@ -53,48 +53,49 @@ describe('POST users',() => {
       .expect(400)
     assert(response.body.error.includes('password should be more than 3 characters'))
   })
-})
-test('When userName is not 3 characters, then correct error should be shown', async() => {
-  const userToCreate = {
-    userName: 'ov',
-    password : 'ovini123',
-    name: 'Ovini P'
-  }
 
-  const response = await api.post('/api/users')
-    .send(userToCreate)
-    .expect(400)
-  assert(response.body.error.includes('userName should be more than 3 characters'))
-})
+  test('When userName is not 3 characters, then correct error should be shown', async() => {
+    const userToCreate = {
+      userName: 'ov',
+      password : 'ovini123',
+      name: 'Ovini P'
+    }
 
-test('When password is not 3 characters, then correct error should be shown', async() => {
-  const userToCreate = {
-    userName:'Ovini',
-    password:'12',
-    name: 'Ovini P'
-  }
+    const response = await api.post('/api/users')
+      .send(userToCreate)
+      .expect(400)
+    assert(response.body.error.includes('userName should be more than 3 characters'))
+  })
 
-  const response = await api.post('/api/users')
-    .send(userToCreate)
-    .expect(400)
-  assert(response.body.error.includes('password should be more than 3 characters'))
-})
+  test('When password is not 3 characters, then correct error should be shown', async() => {
+    const userToCreate = {
+      userName:'Ovini',
+      password:'12',
+      name: 'Ovini P'
+    }
 
-test.only('when userName duplicated, then correct error message is shown', async() => {
-  const userToAdd = {
-    userName:'Ovini',
-    password:'1234',
-    name:'ABC'
-  }
+    const response = await api.post('/api/users')
+      .send(userToCreate)
+      .expect(400)
+    assert(response.body.error.includes('password should be more than 3 characters'))
+  })
 
-  const response = await api.post('/api/users')
-    .send(userToAdd)
-    .expect(400)
+  test.only('when userName duplicated, then correct error message is shown', async() => {
+    const userToAdd = {
+      userName:'Ovini',
+      password:'1234',
+      name:'ABC'
+    }
 
-  assert(response.body.error.includes('expeced userName to be to be unique'))
-})
-//})
+    const response = await api.post('/api/users')
+      .send(userToAdd)
+      .expect(400)
 
-after(async() => {
-  mongoose.connection.close()
+    assert(response.body.error.includes('expeced userName to be to be unique'))
+  })
+  //})
+
+  after(async() => {
+    mongoose.connection.close()
+  })
 })
