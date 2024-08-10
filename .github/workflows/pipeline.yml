@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       COMMIT_MESSAGE: ${{ github.event.commits.*.message && contains(join(github.event.commits.*.message), '#skip') }}
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
