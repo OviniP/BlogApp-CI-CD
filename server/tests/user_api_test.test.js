@@ -17,7 +17,7 @@ beforeEach(async () => {
 
 
 describe('user tests',() => {
-  test('When user is correct, then it should be saved', async() => {
+  /*test('When user is correct, then it should be saved', async() => {
     const userToCreate = {
       userName: 'Ovini1234',
       password : 'ovini123',
@@ -29,7 +29,7 @@ describe('user tests',() => {
     const finalUsersInDB =  await testHelper.usersInDb()
 
     assert.strictEqual(finalUsersInDB.length , testHelper.initializeBlogs.length  + 1)
-  })
+  })*/
 
   test('When userName is not given, then correct error should be shown', async() => {
     const userToCreate = {

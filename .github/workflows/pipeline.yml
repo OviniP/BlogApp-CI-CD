@@ -21,14 +21,14 @@ jobs:
           node-version: '20'
       - name: Install dependencies 
         run: npm install  
-#      - name: Check style
-#        run: npm run lint
+      - name: Check style
+        run: npm run lint
       - name: Build
         run: npm run build
-      - name: user Tests
-        run: npm test --runInBand -- server/tests/user_api_test.test.js  
-      - name: blog Tests
-        run: npm test -- server/tests/blog_api_test.test.js 
+      - name: Tests
+        run: npm test --runInBand 
+    #  - name: blog Tests
+    #    run: npm test -- server/tests/blog_api_test.test.js 
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && env.COMMIT_MESSAGE != 'true'}}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
