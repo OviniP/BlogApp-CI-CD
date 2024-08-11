@@ -15,19 +15,20 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
+
 describe('user tests',() => {
   test('When user is correct, then it should be saved', async() => {
     const userToCreate = {
-      userName: 'Ovini123',
+      userName: 'Ovini1234',
       password : 'ovini123',
-      name: 'Ovini P'
+      name: 'Ovini 1234'
     }
-    const initialUsersInDB =  await testHelper.usersInDb()
     await api.post('/api/users')
       .send(userToCreate)
       .expect(201)
     const finalUsersInDB =  await testHelper.usersInDb()
-    assert.strictEqual(finalUsersInDB.length , initialUsersInDB.length + 1)
+
+    assert.strictEqual(finalUsersInDB.length , testHelper.initializeBlogs.length  + 1)
   })
 
   test('When userName is not given, then correct error should be shown', async() => {

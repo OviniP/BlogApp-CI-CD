@@ -9,7 +9,7 @@ const app = require('../../app')
 const api = supertest(app)
 
 const userToCreate = {
-  userName: 'ovini123',
+  userName: 'ovini123blogapi',
   password : 'ovini123',
   name: 'Ovini P'
 }
@@ -30,6 +30,7 @@ beforeEach(async () => {
     .send(userToCreate)
   token = loginResponse.body.token
 })
+
 
 describe('HTTP GET', () => {
   test('when get is called then 2 blogs are returned', async() => {
