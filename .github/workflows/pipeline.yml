@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Test
-        run: npm test 
+        run: npm test--test-concurrency=1
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && env.COMMIT_MESSAGE != 'true'}}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}

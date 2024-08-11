@@ -18,7 +18,7 @@ beforeEach(async () => {
 describe('user tests',() => {
   test('When user is correct, then it should be saved', async() => {
     const userToCreate = {
-      userName: 'Ovini',
+      userName: 'Ovini123',
       password : 'ovini123',
       name: 'Ovini P'
     }
