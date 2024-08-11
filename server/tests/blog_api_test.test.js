@@ -63,7 +63,7 @@ describe('HTTP POST', () => {
       const returnedPosts = await helper.blogsInDb()
       assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length + 1)
     } catch (error) {
-        /* eslint-disable no-console */
+      /* eslint-disable no-console */
       console.log('Error creating user:', error)
     }
   })
