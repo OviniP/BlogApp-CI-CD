@@ -13,7 +13,7 @@ const userToCreate = {
   password : 'ovini123',
   name: 'Ovini P'
 }
-let token
+//let token
 
 beforeEach(async () => {
   await Blog.deleteMany({})
@@ -26,9 +26,9 @@ beforeEach(async () => {
 
   await api.post('/api/users')
     .send(userToCreate)
-  const loginResponse = await api.post('/api/login')
+  await api.post('/api/login')
     .send(userToCreate)
-  token = loginResponse.body.token
+  //token = loginResponse.body.token
 })
 
 
