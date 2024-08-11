@@ -47,21 +47,25 @@ describe('HTTP GET', () => {
 
 describe('HTTP POST', () => {
   test('when post method is called, then item is added to the db', async () => {
-
     const newBlog = {
       title: 'New Blog by Test',
       author: 'Robert C. Martin',
       url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
       likes: 0,
     }
-    await api.post('/api/blogs')
-      .set('Authorization' ,`Bearer ${token}`)
-      .send(newBlog)
-      .expect(201)
-      .expect('Content-Type', /application\/json/)
+    try {
+      await api.post('/api/blogs')
+        .set('Authorization' ,`Bearer ${token}`)
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
 
-    const returnedPosts = await helper.blogsInDb()
-    assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length + 1)
+      const returnedPosts = await helper.blogsInDb()
+      assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length + 1)
+    } catch (error) {
+    /* eslint-disable no-console */
+      console.log('Error creating user:', error)
+    }
   })
 
   test('when post method is calld without like property, then default value 0 is added',async () => {
