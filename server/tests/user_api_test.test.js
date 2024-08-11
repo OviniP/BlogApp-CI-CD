@@ -22,12 +22,12 @@ describe('user tests',() => {
       password : 'ovini123',
       name: 'Ovini P'
     }
-    //const initialUsersInDB =  await testHelper.usersInDb()
+    const initialUsersInDB =  await testHelper.usersInDb()
     await api.post('/api/users')
       .send(userToCreate)
       .expect(201)
-    //const finalUsersInDB =  await testHelper.usersInDb()
-    //assert.strictEqual(finalUsersInDB.length , initialUsersInDB.length + 1)
+    const finalUsersInDB =  await testHelper.usersInDb()
+    assert.strictEqual(finalUsersInDB.length , initialUsersInDB.length + 1)
   })
 
   test('When userName is not given, then correct error should be shown', async() => {
