@@ -85,85 +85,85 @@ describe('HTTP POST', () => {
     const returnedPost = response.body
     assert.strictEqual(returnedPost.likes,0)
   })
-
-  test('when like property has a value, then the value is saved',async () => {
-    const newBlog = {
-      title: 'Blog with no Likes',
-      author: 'Robert C. Martin',
-      url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
-      likes:10
-    }
+})
+test('when like property has a value, then the value is saved',async () => {
+  const newBlog = {
+    title: 'Blog with no Likes',
+    author: 'Robert C. Martin',
+    url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+    likes:10
+  }
     const createResponse = await api.post('/api/blogs')
-      .set('Authorization' ,`Bearer ${token}`)
-      .send(newBlog)
-      .expect(201)
-      .expect('Content-Type', /application\/json/)
+        .set('Authorization' ,`Bearer ${token}`)
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
     const createdPost = createResponse.body
 
     const response = await api.get(`/api/blogs/${createdPost.id}`)
     const returnedPost = response.body
     assert.strictEqual(returnedPost.likes,10)
-  })
-
-  test('title attribute is missing, then 404 error occurs', async () => {
-    const newBlog = {
-      author: 'Robert C. Martin',
-      url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html'
-    }
-
-    await api.post('/api/blogs')
-      .set('Authorization' ,`Bearer ${token}`)
-      .send(newBlog)
-      .expect(404)
-
-    const returnedPosts = await helper.blogsInDb()
-    assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length)
-  })
-
-  test('url attribute is missing, then 404 error occurs', async () => {
-    const newBlog = {
-      author: 'Robert C. Martin',
-      title: 'Blog with no Likes',
-    }
-
-    await api.post('/api/blogs')
-      .set('Authorization' ,`Bearer ${token}`)
-      .send(newBlog)
-      .expect(404)
-
-    const returnedPosts = await helper.blogsInDb()
-    assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length)
-  })
-
-  test('if both title and url attributes is missing, then 404 error occurs', async () => {
-    const newBlog = {
-      author: 'Robert C. Martin',
-      title: 'Blog with no Likes',
-    }
-
-    await api.post('/api/blogs')
-      .set('Authorization' ,`Bearer ${token}`)
-      .send(newBlog)
-      .expect(404)
-
-    const returnedPosts = await helper.blogsInDb()
-    assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length)
-  })
-
-  test('when access token is not given, then authentication error occured', async () => {
-
-    const newBlog = {
-      title: 'New Blog by Test',
-      author: 'Robert C. Martin',
-      url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
-      likes: 0,
-    }
-    await api.post('/api/blogs')
-      .send(newBlog)
-      .expect(401)
-      .expect('Content-Type', /application\/json/)
-  })
 })
+
+test('title attribute is missing, then 404 error occurs', async () => {
+const newBlog = {
+    author: 'Robert C. Martin',
+    url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html'
+}
+
+await api.post('/api/blogs')
+    .set('Authorization' ,`Bearer ${token}`)
+    .send(newBlog)
+    .expect(404)
+
+const returnedPosts = await helper.blogsInDb()
+assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length)
+})
+
+test('url attribute is missing, then 404 error occurs', async () => {
+const newBlog = {
+    author: 'Robert C. Martin',
+    title: 'Blog with no Likes',
+}
+
+await api.post('/api/blogs')
+    .set('Authorization' ,`Bearer ${token}`)
+    .send(newBlog)
+    .expect(404)
+
+  const returnedPosts = await helper.blogsInDb()
+  assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length)
+})
+
+test('if both title and url attributes is missing, then 404 error occurs', async () => {
+    const newBlog = {
+        author: 'Robert C. Martin',
+        title: 'Blog with no Likes',
+    }
+
+    await api.post('/api/blogs')
+        .set('Authorization' ,`Bearer ${token}`)
+        .send(newBlog)
+        .expect(404)
+
+    const returnedPosts = await helper.blogsInDb()
+    assert.strictEqual(returnedPosts.length,helper.initializeBlogs.length)
+    })
+
+test('when access token is not given, then authentication error occured', async () => {
+
+const newBlog = {
+    title: 'New Blog by Test',
+    author: 'Robert C. Martin',
+    url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+    likes: 0,
+}
+await api.post('/api/blogs')
+    .send(newBlog)
+    .expect(401)
+    .expect('Content-Type', /application\/json/)
+})
+
 /*
 describe('HTTP DELETE', () => {
     test('when deleted, then count will be reduced', async () => {
