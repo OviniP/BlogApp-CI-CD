@@ -27,8 +27,6 @@ jobs:
         run: npm run build
       - name: Tests
         run: npm test --concurrency=1
-    #  - name: blog Tests
-    #    run: npm test -- server/tests/blog_api_test.test.js 
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && env.COMMIT_MESSAGE != 'true'}}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
@@ -39,11 +37,36 @@ jobs:
     env: 
       COMMIT_MESSAGE: ${{ github.event.commits.*.message && contains(join(github.event.commits.*.message), '#skip') }}
     steps:
+      - name: checkout
+        if: ${{ github.event_name == 'push'  && env.COMMIT_MESSAGE != 'true'}}
+        uses: actions/checkout@v4
       - name: Bump version and push tag
         if: ${{ github.event_name == 'push'  && env.COMMIT_MESSAGE != 'true'}}
         uses: anothrNick/github-tag-action@1.70.0
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+  notifications:
+    needs: [simple_deployment_pipeline, tag_release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: deployment Success
+        if: ${{ success() }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+            webhook: ${{ secrets.DISCORD_WEBHOOK }}
+            nodetail: true
+            content: "A new version of blogapp deployed"
+            color: 0x90EE90
+            description: to https://blogapp-ci-cd.onrender.com by ${{ github.triggering_actor }} 
+      - name: Deployment failed
+        if: ${{ failure() }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+            webhook: ${{ secrets.DISCORD_WEBHOOK }}
+            nodetail: true
+            content: "Build failed"
+            color: 0xFF0000
+            description: commit [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) by ${{ github.triggering_actor }} broke the build.
 
  
